@@ -1,0 +1,64 @@
+{
+  "cities": [
+    {
+      "id": "b823",
+      "cityName": "Flores de Avila",
+      "country": "Spain",
+      "emoji": "🇪🇸",
+      "date": "2024-06-30T19:09:42.080Z",
+      "notes": "",
+      "position": {
+        "lat": "40.89912121393654",
+        "lng": "-5.097656250000001"
+      }
+    },
+    {
+      "id": "6c02",
+      "cityName": "Beost",
+      "country": "France",
+      "emoji": "🇫🇷",
+      "date": "2024-06-30T19:09:45.599Z",
+      "notes": "",
+      "position": {
+        "lat": "42.97390797802749",
+        "lng": "-0.30761718750000006"
+      }
+    },
+    {
+      "id": "7edc",
+      "cityName": "Cabezon de Cameros",
+      "country": "Spain",
+      "emoji": "🇪🇸",
+      "date": "2024-07-08T15:55:27.902Z",
+      "notes": "",
+      "position": {
+        "lat": "42.19734229969626",
+        "lng": "-2.5048828125000004"
+      }
+    },
+    {
+      "id": "0e4c",
+      "cityName": "Cobeja",
+      "country": "Spain",
+      "emoji": "🇪🇸",
+      "date": "2024-07-08T15:55:32.420Z",
+      "notes": "",
+      "position": {
+        "lat": "40.01496354492396",
+        "lng": "-3.8671875000000004"
+      }
+    },
+    {
+      "id": "a359",
+      "cityName": "Pozega",
+      "country": "Serbia",
+      "emoji": "🇷🇸",
+      "date": "2024-07-08T15:55:39.415Z",
+      "notes": "",
+      "position": {
+        "lat": "43.94858191255818",
+        "lng": "19.995117187500004"
+      }
+    }
+  ]
+}
