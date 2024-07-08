@@ -1,2 +1,2 @@
 # WorldWise
-U izgradnji je koristen alat Vite. Aplikacija se sastoji od preko 25 komponenti i stilizovana je uz pomoc CSS modula. Pokrece se naredbom "npm run dev". Posjeduje i svoj API koji je potrebno pokrenuti uz pomoc komande "npm run server" kako bi aplikacija radila.
+In the build process, I used the Vite tool. The application consists of over 25 components and is styled using CSS modules. It is run with the command "npm run dev". It also has its own API which needs to be started with the command "npm run server" for the application to work.
