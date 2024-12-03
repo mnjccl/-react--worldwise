@@ -1,4 +1,4 @@
-import styles from "./CountryItem.module.css";
+import styles from "../css/CountryItem.module.css";
 import PropTypes from "prop-types";
 
 CountryItem.propTypes = {

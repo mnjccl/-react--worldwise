@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import styles from "./Message.module.css";
+import styles from "../css/Message.module.css";
 
 function Message({ message }) {
   return (
