@@ -2,18 +2,18 @@
 /* eslint-disable react-refresh/only-export-components */
 
 import { useEffect, useState } from "react";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { useNavigate } from "react-router-dom";
 
-import styles from "./Form.module.css";
+import styles from "../css/Form.module.css";
 import Button from "./Button";
 import Spinner from "./Spinner";
 import Message from "./Message";
 import BackButton from "./BackButton";
-import { useUrlPosition } from "../hooks/useUrlPosition";
 
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
+import { useUrlPosition } from "../hooks/useUrlPosition";
 import { useCities } from "../contexts/CitiesContext";
-import { useNavigate } from "react-router-dom";
 
 export function convertToEmoji(countryCode) {
   const codePoints = countryCode
