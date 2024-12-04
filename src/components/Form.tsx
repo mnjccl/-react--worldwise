@@ -1,6 +1,3 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable react-refresh/only-export-components */
-
 import { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -15,11 +12,11 @@ import BackButton from "./BackButton";
 import { useUrlPosition } from "../hooks/useUrlPosition";
 import { useCities } from "../contexts/CitiesContext";
 
-export function convertToEmoji(countryCode) {
+export function convertToEmoji(countryCode: string): string {
   const codePoints = countryCode
     .toUpperCase()
     .split("")
-    .map((char) => 127397 + char.charCodeAt());
+    .map((char: string) => 127397 + char.charCodeAt(0));
   return String.fromCodePoint(...codePoints);
 }
 
@@ -59,7 +56,8 @@ function Form() {
           setCountry(data.countryName);
           setEmoji(convertToEmoji(data.countryCode));
         } catch (err) {
-          setGeocodingError(err.message);
+          if (err instanceof Error) setGeocodingError(err.message);
+          else setGeocodingError("An unknown error occurred.");
         } finally {
           setIsLoadingGeocoding(false);
         }
@@ -69,7 +67,7 @@ function Form() {
     [lat, lng]
   );
 
-  async function handleSubmit(e) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
     if (!cityName || !date) return;
@@ -78,7 +76,7 @@ function Form() {
       cityName,
       country,
       emoji,
-      date,
+      date: date.toISOString(),
       notes,
       position: { lat, lng },
     };
@@ -113,7 +111,7 @@ function Form() {
         <label htmlFor="date">When did you go to {cityName}?</label>
         <DatePicker
           id="date"
-          onChange={(date) => setDate(date)}
+          onChange={(date) => setDate(date || new Date())}
           selected={date}
           dateFormat="dd/MM/yyyy"
         />

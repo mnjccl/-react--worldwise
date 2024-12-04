@@ -1,5 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable no-unused-vars */
 import { useEffect } from "react";
 import { useCities } from "../contexts/CitiesContext";
 import Spinner from "./Spinner";
@@ -7,7 +5,7 @@ import styles from "../css/City.module.css";
 import { useParams } from "react-router-dom";
 import BackButton from "./BackButton";
 
-const formatDate = (date) =>
+const formatDate = (date: string): string =>
   new Intl.DateTimeFormat("en", {
     day: "numeric",
     month: "long",
@@ -20,10 +18,8 @@ function City() {
   const { getCity, currentCity, isLoading } = useCities();
 
   useEffect(() => {
-    getCity(id);
+    if (id) getCity(id);
   }, [id]);
-
-  const { cityName, emoji, date, notes } = currentCity;
 
   if (isLoading) return <Spinner />;
 
@@ -32,30 +28,30 @@ function City() {
       <div className={styles.row}>
         <h6>City name</h6>
         <h3>
-          <span>{emoji}</span> {cityName}
+          <span>{currentCity?.emoji}</span> {currentCity?.cityName}
         </h3>
       </div>
 
       <div className={styles.row}>
-        <h6>You went to {cityName} on</h6>
-        <p>{formatDate(date || null)}</p>
+        <h6>You went to {currentCity?.cityName} on</h6>
+        <p>{formatDate(currentCity?.date || "")}</p>
       </div>
 
-      {notes && (
+      {currentCity?.notes && (
         <div className={styles.row}>
           <h6>Your notes</h6>
-          <p>{notes}</p>
+          <p>{currentCity?.notes}</p>
         </div>
       )}
 
       <div className={styles.row}>
         <h6>Learn more</h6>
         <a
-          href={`https://en.wikipedia.org/wiki/${cityName}`}
+          href={`https://en.wikipedia.org/wiki/${currentCity?.cityName}`}
           target="_blank"
           rel="noreferrer"
         >
-          Check out {cityName} on Wikipedia &rarr;
+          Check out {currentCity?.cityName} on Wikipedia &rarr;
         </a>
       </div>
 

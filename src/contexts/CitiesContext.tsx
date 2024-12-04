@@ -1,24 +1,34 @@
-/* eslint-disable react/prop-types */
 import {
   createContext,
   useEffect,
   useContext,
   useReducer,
   useCallback,
+  ReactNode,
 } from "react";
+import { CitiesContextAction, CitiesContextState, City } from "../types";
 
 const BASE_URL = "http://localhost:9000";
 
-const CitiesContext = createContext();
-
-const initialState = {
-  cities: [],
-  isLoading: false,
-  currentCity: {},
-  error: "",
+type CitiesContextType = CitiesContextState & {
+  getCity: (id: string) => Promise<void>;
+  createCity: (newCity: City) => Promise<void>;
+  deleteCity: (id: string) => Promise<void>;
 };
 
-function reducer(state, action) {
+const CitiesContext = createContext<CitiesContextType | undefined>(undefined);
+
+const initialState: CitiesContextState = {
+  cities: [],
+  isLoading: false,
+  currentCity: null,
+  error: null,
+};
+
+function reducer(
+  state: CitiesContextState,
+  action: CitiesContextAction
+): CitiesContextState {
   switch (action.type) {
     case "loading":
       return { ...state, isLoading: true };
@@ -46,7 +56,7 @@ function reducer(state, action) {
         ...state,
         isLoading: false,
         cities: state.cities.filter((city) => city.id !== action.payload),
-        currentCity: {},
+        currentCity: null,
       };
 
     case "rejected":
@@ -61,7 +71,7 @@ function reducer(state, action) {
   }
 }
 
-function CitiesProvider({ children }) {
+function CitiesProvider({ children }: { children: ReactNode }) {
   const [{ cities, isLoading, currentCity, error }, dispatch] = useReducer(
     reducer,
     initialState
@@ -86,8 +96,8 @@ function CitiesProvider({ children }) {
   }, []);
 
   const getCity = useCallback(
-    async function getCity(id) {
-      if (Number(id) === currentCity.id) return;
+    async function getCity(id: string) {
+      if (id === String(currentCity?.id)) return;
 
       dispatch({ type: "loading" });
 
@@ -102,10 +112,10 @@ function CitiesProvider({ children }) {
         });
       }
     },
-    [currentCity.id]
+    [currentCity?.id]
   );
 
-  async function createCity(newCity) {
+  async function createCity(newCity: City) {
     dispatch({ type: "loading" });
 
     try {
@@ -127,7 +137,7 @@ function CitiesProvider({ children }) {
     }
   }
 
-  async function deleteCity(id) {
+  async function deleteCity(id: string) {
     dispatch({ type: "loading" });
 
     try {
@@ -135,7 +145,7 @@ function CitiesProvider({ children }) {
         method: "DELETE",
       });
 
-      dispatch({ type: "city/deleted", payload: id });
+      dispatch({ type: "city/deleted", payload: String(id) });
     } catch {
       dispatch({
         type: "rejected",
@@ -168,5 +178,4 @@ function useCities() {
   return context;
 }
 
-// eslint-disable-next-line react-refresh/only-export-components
 export { CitiesProvider, useCities };
