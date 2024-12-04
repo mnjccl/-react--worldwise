@@ -12,6 +12,10 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true
   },
-  "include": ["src/**/*"],
+  "include": [
+    "src/**/*",
+    "src/types/cssmodules.d.ts",
+    "src/css/**/*.module.css"
+  ],
   "exclude": ["node_modules", "dist"]
 }
