@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import styles from "../css/Message.module.css";
 
 function Message({ message }: { message: string }) {

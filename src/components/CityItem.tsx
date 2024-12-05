@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import { useCities } from "../contexts/CitiesContext";
 import styles from "../css/CityItem.module.css";
 import { Link } from "react-router-dom";
@@ -17,7 +16,7 @@ function CityItem({ city }: { city: City }) {
 
   function handleClick(e: React.MouseEvent<HTMLButtonElement>) {
     e.preventDefault();
-    deleteCity(id);
+    if (id) deleteCity(id);
   }
 
   return (

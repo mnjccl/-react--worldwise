@@ -15,8 +15,8 @@ export function useGeolocation(defaultPosition: Position | null = null) {
     navigator.geolocation.getCurrentPosition(
       (pos) => {
         setPosition({
-          lat: pos.coords.latitude,
-          lng: pos.coords.longitude,
+          lat: String(pos.coords.latitude),
+          lng: String(pos.coords.longitude),
         });
         setIsLoading(false);
       },

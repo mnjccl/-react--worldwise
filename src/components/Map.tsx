@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import { useNavigate } from "react-router-dom";
 import {
   MapContainer,
@@ -16,10 +15,11 @@ import { useGeolocation } from "../hooks/useGeolocation";
 import { useUrlPosition } from "../hooks/useUrlPosition";
 import Button from "./Button";
 import { ChangeCenterProps } from "../types";
+import { LeafletMouseEvent } from "leaflet";
 
 function Map() {
   const { cities } = useCities();
-  const [mapPosition, setMapPosition] = useState([40, 0]);
+  const [mapPosition, setMapPosition] = useState<[number, number]>([40, 0]);
   const {
     isLoading: isLoadingPosition,
     position: geolocationPosition,
@@ -65,7 +65,7 @@ function Map() {
         />
         {cities.map((city) => (
           <Marker
-            position={[city.position.lat, city.position.lng]}
+            position={[Number(city.position.lat), Number(city.position.lng)]}
             key={city.id}
           >
             <Popup>
@@ -74,7 +74,9 @@ function Map() {
           </Marker>
         ))}
 
-        <ChangeCenter position={[mapPosition[0], mapPosition[1]]} />
+        <ChangeCenter
+          position={[mapPosition[0] as number, mapPosition[1] as number]}
+        />
         <DetectClick />
       </MapContainer>
     </div>
@@ -91,7 +93,8 @@ function DetectClick() {
   const navigate = useNavigate();
 
   useMapEvents({
-    click: (e: any) => navigate(`form?lat=${e.latlng.lat}&lng=${e.latlng.lng}`),
+    click: (e: LeafletMouseEvent) =>
+      navigate(`form?lat=${e.latlng.lat}&lng=${e.latlng.lng}`),
   });
 
   return null;

@@ -5,13 +5,17 @@ import styles from "../css/City.module.css";
 import { useParams } from "react-router-dom";
 import BackButton from "./BackButton";
 
-const formatDate = (date: string): string =>
-  new Intl.DateTimeFormat("en", {
+const formatDate = (date: string | undefined): string => {
+  if (!date || isNaN(new Date(date).getTime())) {
+    return "Invalid date";
+  }
+  return new Intl.DateTimeFormat("en", {
     day: "numeric",
     month: "long",
     year: "numeric",
     weekday: "long",
   }).format(new Date(date));
+};
 
 function City() {
   const { id } = useParams();
@@ -19,7 +23,7 @@ function City() {
 
   useEffect(() => {
     if (id) getCity(id);
-  }, [id]);
+  }, [id, getCity]);
 
   if (isLoading) return <Spinner />;
 

@@ -12,7 +12,7 @@ export default function Login() {
   const { login, isAuthenticated } = useAuth();
   const navigate = useNavigate();
 
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  function handleSubmit(e: React.MouseEvent<HTMLButtonElement>) {
     e.preventDefault();
 
     if (email && password) login(email, password);

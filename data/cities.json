@@ -25,39 +25,15 @@
       }
     },
     {
-      "id": "7edc",
-      "cityName": "Cabezon de Cameros",
-      "country": "Spain",
-      "emoji": "🇪🇸",
-      "date": "2024-07-08T15:55:27.902Z",
+      "id": "7ada",
+      "cityName": "Rogatica",
+      "country": "Bosnia and Herzegovina",
+      "emoji": "🇧🇦",
+      "date": "2024-12-05T15:19:41.109Z",
       "notes": "",
       "position": {
-        "lat": "42.19734229969626",
-        "lng": "-2.5048828125000004"
-      }
-    },
-    {
-      "id": "0e4c",
-      "cityName": "Cobeja",
-      "country": "Spain",
-      "emoji": "🇪🇸",
-      "date": "2024-07-08T15:55:32.420Z",
-      "notes": "",
-      "position": {
-        "lat": "40.01496354492396",
-        "lng": "-3.8671875000000004"
-      }
-    },
-    {
-      "id": "a359",
-      "cityName": "Pozega",
-      "country": "Serbia",
-      "emoji": "🇷🇸",
-      "date": "2024-07-08T15:55:39.415Z",
-      "notes": "",
-      "position": {
-        "lat": "43.94858191255818",
-        "lng": "19.995117187500004"
+        "lat": "43.79022563870751",
+        "lng": "19.094238281250004"
       }
     }
   ]
