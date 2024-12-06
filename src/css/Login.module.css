@@ -22,3 +22,24 @@
   flex-direction: column;
   gap: 0.5rem;
 }
+
+.formBtns {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.formBtns p {
+  font-size: 1.6rem;
+  align-self: center;
+  font-weight: 400;
+}
+
+.formLink:link,
+.formLink:visited,
+.formLink:hover,
+.formLink:active {
+  color: #00c46a;
+  text-decoration: none;
+  font-weight: 800;
+}

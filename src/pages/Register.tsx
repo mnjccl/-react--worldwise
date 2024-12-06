@@ -2,6 +2,7 @@ import { useState } from "react";
 import Button from "../components/Button";
 import PageNav from "../components/PageNav";
 import styles from "../css/Register.module.css";
+import { NavLink } from "react-router-dom";
 
 function Register() {
   const [fullName, setFullName] = useState<string>();
@@ -51,8 +52,16 @@ function Register() {
             onChange={(e) => setConfirmPassword(e.target.value)}
           />
         </div>
-        <div>
+        <div className={styles.formBtns}>
           <Button type="primary">Register</Button>
+          <p>
+            You already have account?{"  "}
+            <span>
+              <NavLink className={styles.formLink} to="/login">
+                Log In
+              </NavLink>
+            </span>
+          </p>
         </div>
       </form>
     </main>

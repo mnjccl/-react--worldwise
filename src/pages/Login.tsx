@@ -3,7 +3,7 @@ import styles from "../css/Login.module.css";
 import PageNav from "../components/PageNav";
 import Button from "../components/Button";
 import { useAuth } from "../contexts/FakeAuthContext";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 export default function Login() {
   const [email, setEmail] = useState("jack@example.com");
@@ -49,10 +49,18 @@ export default function Login() {
           />
         </div>
 
-        <div>
+        <div className={styles.formBtns}>
           <Button type="primary" onClick={handleSubmit}>
             Login
           </Button>
+          <p>
+            You don't have account?{"  "}
+            <span>
+              <NavLink className={styles.formLink} to="/register">
+                Sign Up
+              </NavLink>
+            </span>
+          </p>
         </div>
       </form>
     </main>
