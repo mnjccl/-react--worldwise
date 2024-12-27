@@ -23,6 +23,13 @@ function Register() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
+    if (password.length < 8) {
+      showToast("Password must have at least 8 characters.", "error");
+      setPassword("");
+      setConfirmPassword("");
+      return;
+    }
+
     if (password !== confirmPassword) {
       showToast("Passwords don't match.", "error");
       setConfirmPassword("");
@@ -82,7 +89,13 @@ function Register() {
           </p>
         </div>
       </form>
-      {toast && <Toast message={toast.message} type={toast.type} />}
+      {toast && (
+        <Toast
+          message={toast.message}
+          type={toast.type}
+          onClose={() => setToast(null)}
+        />
+      )}
     </main>
   );
 }
