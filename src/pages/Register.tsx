@@ -1,16 +1,34 @@
 import { useState } from "react";
-import Button from "../components/Button";
-import PageNav from "../components/PageNav";
-import styles from "../css/Register.module.css";
 import { NavLink } from "react-router-dom";
 
-function Register() {
-  const [fullName, setFullName] = useState<string>();
-  const [email, setEmail] = useState<string>();
-  const [password, setPassword] = useState<string>();
-  const [confirmPassword, setConfirmPassword] = useState<string>();
+import styles from "../css/Register.module.css";
+import Button from "../components/Button";
+import PageNav from "../components/PageNav";
+import Toast from "../components/Toast";
 
-  const handleSubmit = () => {};
+function Register() {
+  const [fullName, setFullName] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [confirmPassword, setConfirmPassword] = useState<string>("");
+  const [toast, setToast] = useState<{
+    message: string;
+    type: "success" | "error";
+  } | null>(null);
+
+  const showToast = (message: string, type: "success" | "error") => {
+    setToast({ message, type });
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (password !== confirmPassword) {
+      showToast("Passwords don't match.", "error");
+      setConfirmPassword("");
+      return;
+    }
+  };
 
   return (
     <main className={styles.register}>
@@ -64,6 +82,7 @@ function Register() {
           </p>
         </div>
       </form>
+      {toast && <Toast message={toast.message} type={toast.type} />}
     </main>
   );
 }

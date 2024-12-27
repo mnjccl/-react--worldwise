@@ -78,3 +78,10 @@ export interface CoutryItemProps {
 export interface ChangeCenterProps {
   position: [number, number];
 }
+
+// Toast
+
+export interface ToastProps {
+  message: string;
+  type: "success" | "error";
+}
