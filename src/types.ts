@@ -62,6 +62,7 @@ export interface ButtonProps {
   children: ReactNode;
   onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
   type: string;
+  loading?: boolean;
 }
 
 // CountryItem

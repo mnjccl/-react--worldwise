@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 import styles from "../css/Register.module.css";
 import Button from "../components/Button";
@@ -7,10 +7,12 @@ import PageNav from "../components/PageNav";
 import Toast from "../components/Toast";
 
 function Register() {
-  const [fullName, setFullName] = useState<string>("");
+  const navigate = useNavigate();
+  const [username, setUsername] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
+  const [loading, setLoading] = useState(false);
   const [toast, setToast] = useState<{
     message: string;
     type: "success" | "error";
@@ -20,8 +22,13 @@ function Register() {
     setToast({ message, type });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (!username || !email || !password || !confirmPassword) {
+      showToast("All fields are required.", "error");
+      return;
+    }
 
     if (password.length < 8) {
       showToast("Password must have at least 8 characters.", "error");
@@ -35,6 +42,40 @@ function Register() {
       setConfirmPassword("");
       return;
     }
+
+    setLoading(true);
+    try {
+      const response = await fetch(
+        "https://worldwiseapp.azurewebsites.net/api/user/register",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            username,
+            email,
+            password,
+            confirmPassword,
+          }),
+        }
+      );
+
+      if (!response.ok) {
+        showToast("Registration failed. Please try again.", "error");
+        return;
+      }
+
+      setUsername("");
+      setEmail("");
+      setPassword("");
+      setConfirmPassword("");
+      showToast("Registration successful!", "success");
+      setTimeout(() => navigate("/login"), 2000);
+    } catch (err) {
+      console.error(err);
+      showToast("An error occurred. Please try again later.", "error");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -42,12 +83,13 @@ function Register() {
       <PageNav />
       <form className={styles.form} onSubmit={handleSubmit}>
         <div className={styles.row}>
-          <label htmlFor="fullName">Full Name</label>
+          <label htmlFor="username">Username</label>
           <input
             type="text"
-            value={fullName}
-            onChange={(e) => setFullName(e.target.value)}
-            id="fullName"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            id="username"
+            autoComplete="username"
           />
         </div>
         <div className={styles.row}>
@@ -57,6 +99,7 @@ function Register() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             id="email"
+            autoComplete="email"
           />
         </div>
         <div className={styles.row}>
@@ -66,6 +109,7 @@ function Register() {
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            autoComplete="password"
           />
         </div>
         <div className={styles.row}>
@@ -75,10 +119,13 @@ function Register() {
             type="password"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
+            autoComplete="confirmPassword"
           />
         </div>
         <div className={styles.formBtns}>
-          <Button type="primary">Register</Button>
+          <Button type="primary" loading={loading}>
+            {loading ? "Registering..." : "Register"}
+          </Button>
           <p>
             You already have account?{"  "}
             <span>
@@ -89,6 +136,7 @@ function Register() {
           </p>
         </div>
       </form>
+
       {toast && (
         <Toast
           message={toast.message}

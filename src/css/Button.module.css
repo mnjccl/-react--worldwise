@@ -9,6 +9,10 @@
   cursor: pointer;
 }
 
+.btn.disabled {
+  pointer-events: none;
+}
+
 .primary {
   font-weight: 700;
   background-color: var(--color-brand--2);
