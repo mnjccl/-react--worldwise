@@ -4,23 +4,18 @@ import { NavLink, useNavigate } from "react-router-dom";
 import styles from "../css/Register.module.css";
 import Button from "../components/Button";
 import PageNav from "../components/PageNav";
-import Toast from "../components/Toast";
+
+import { useToast } from "../hooks/useToast";
 
 function Register() {
   const navigate = useNavigate();
+  const { showToast } = useToast();
+
   const [username, setUsername] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
   const [loading, setLoading] = useState(false);
-  const [toast, setToast] = useState<{
-    message: string;
-    type: "success" | "error";
-  } | null>(null);
-
-  const showToast = (message: string, type: "success" | "error") => {
-    setToast({ message, type });
-  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -69,7 +64,7 @@ function Register() {
       setPassword("");
       setConfirmPassword("");
       showToast("Registration successful!", "success");
-      setTimeout(() => navigate("/login"), 2000);
+      navigate("/login");
     } catch (err) {
       console.error(err);
       showToast("An error occurred. Please try again later.", "error");
@@ -136,14 +131,6 @@ function Register() {
           </p>
         </div>
       </form>
-
-      {toast && (
-        <Toast
-          message={toast.message}
-          type={toast.type}
-          onClose={() => setToast(null)}
-        />
-      )}
     </main>
   );
 }
