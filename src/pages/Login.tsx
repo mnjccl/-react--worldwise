@@ -1,34 +1,54 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
+
+import { useToast } from "../hooks/useToast";
 import styles from "../css/Login.module.css";
 import PageNav from "../components/PageNav";
 import Button from "../components/Button";
-import { useAuth } from "../contexts/FakeAuthContext";
-import { NavLink, useNavigate } from "react-router-dom";
 
 export default function Login() {
-  const [email, setEmail] = useState("jack@example.com");
-  const [password, setPassword] = useState("qwerty");
-
-  const { login, isAuthenticated } = useAuth();
+  const { showToast } = useToast();
   const navigate = useNavigate();
 
-  function handleSubmit(e: React.MouseEvent<HTMLButtonElement>) {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (email && password) login(email, password);
-  }
+    if (!email || !password) {
+      showToast("Please", "error");
+      return;
+    }
 
-  useEffect(
-    function () {
-      if (isAuthenticated) navigate("/app", { replace: true });
-    },
-    [isAuthenticated, navigate]
-  );
+    setLoading(true);
+    try {
+      const response = await fetch(
+        "https://worldwiseapp.azurewebsites.net/api/user/login",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, password }),
+        }
+      );
+
+      const data = await response.json();
+      console.log(data);
+
+      showToast("Login successful! Enjoy!", "success");
+      navigate("/app");
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <main className={styles.login}>
       <PageNav />
-      <form className={styles.form}>
+      <form className={styles.form} onSubmit={handleSubmit}>
         <div className={styles.row}>
           <label htmlFor="email">Email address</label>
           <input
@@ -50,8 +70,8 @@ export default function Login() {
         </div>
 
         <div className={styles.formBtns}>
-          <Button type="primary" onClick={handleSubmit}>
-            Login
+          <Button type="primary" loading={loading}>
+            {loading ? "Logging in..." : "Login"}
           </Button>
           <p>
             You don't have account?{"  "}
