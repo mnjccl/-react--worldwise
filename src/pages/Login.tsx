@@ -18,7 +18,7 @@ export default function Login() {
     e.preventDefault();
 
     if (!email || !password) {
-      showToast("Please", "error");
+      showToast("Please fill required fields.", "error");
       return;
     }
 
@@ -34,6 +34,7 @@ export default function Login() {
       );
 
       const data = await response.json();
+      localStorage.setItem("token", data.token);
       console.log(data);
 
       showToast("Login successful! Enjoy!", "success");
